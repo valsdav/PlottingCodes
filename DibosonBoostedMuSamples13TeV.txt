@@ -1,0 +1,27 @@
+# always list data first and list the lumi in the third column.
+# then samples in the order that they get put into the TStack
+# Multiple entries with the same sample name will get added together after scaling.
+# sample name is used for the legend entry - but no spaces, please
+#
+# name           file location                xspb/lumipb  otherscale	      nMCevents	colorcode	stackit
+data    InData/output_mu/WWTree_data_golden_B3C1D1E1F1G1H3.root 36807  1                   1	     1             0
+WVjj    InData/output_mu/WWTree_Signal_LL_mu.root	  0.0413     1.0	        499800	   400		   1  
+WVjj    InData/output_mu/WWTree_Signal_LT_mu.root	  0.25973    1.0	       2471400	   400		   1
+WVjj    InData/output_mu/WWTree_Signal_TT_mu.root	  0.4475     1.0	       4988000	   400		   1
+VV      InData/output_mu/WWTree_WW_excl_amcatnlo_mu.root 49.997     1.0      	       5176114	   868             1
+VV      InData/output_mu/WWTree_WZ_excl_amcatnlo_mu.root 10.71	     1.0      	      24221923	   868             1
+VV      InData/output_mu/WWTree_ZZ_excl_amcatnlo_mu.root  3.22	     1.0      	      15345572	   868             1
+#Z+jets  InData/output_mu/WWTree_DYJetsToLL_amcatnlo_ext1_mu.root  5765.4 1.0	      49144274	     4             1
+top     InData/output_mu/WWTree_sch_mu.root		  11.36      1.0	       1000000     418             1
+top     InData/output_mu/WWTree_tch_mu.root		 136.02	     1.0	      67240808 	   418             1
+top     InData/output_mu/WWTree_tch_bar_mu.root	  	  80.95	     1.0	      38811017	   418             1
+top     InData/output_mu/WWTree_TTbar_powheg_mu.root	 823.4	     1.0	      77229341     418             1
+top     InData/output_mu/WWTree_tWch_bara_mu.root	  35.85	     0.546	       8681541	   418             1
+top     InData/output_mu/WWTree_tWcha_mu.root	  	  35.85	     0.546	       8629641	   418             1
+W+jets  InData/output_mu/WWTree_WJets100a_mu.root	1345.0	     1.21	      79356685	   632             1
+W+jets  InData/output_mu/WWTree_WJets200a_mu.root	 359.7	     1.21	      39680891	   632             1
+W+jets  InData/output_mu/WWTree_WJets400a_mu.root	  48.91	     1.21	       7759701	   632             1
+W+jets  InData/output_mu/WWTree_WJets600a_mu.root	  12.05	     1.21	      18687480	   632             1
+W+jets  InData/output_mu/WWTree_WJets800ext1_mu.root	   5.501     1.21	       6200954	   632             1
+W+jets  InData/output_mu/WWTree_WJets1200a_mu.root	   1.329     1.21	       6872441	   632             1
+W+jets  InData/output_mu/WWTree_WJets2500a_mu.root	   0.03216   1.21	       2637821	   632             1
