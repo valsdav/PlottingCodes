@@ -1,0 +1,21 @@
+##########################################################################
+#	VariableName			h2Bin	h2min	h2max	h1bin	h1min	h1max
+#	=> if you put $ in the last column then the script will place space at that position
+#	=> 
+##########################################################################
+#fabs((AK4_1_eta_gen-vbf_maxpt_j1_eta)/(AK4_1_eta_gen+vbf_maxpt_j1_eta)):fabs((AK4_2_eta_gen-vbf_maxpt_j2_eta)/(AK4_2_eta_gen+vbf_maxpt_j2_eta))	20	0	1	20	0	1	"asymmetry$leading$VBF$jet$#eta$(RECO)":"asymmetry$sub-leading$VBF$jet$#eta$(RECO)"
+#ungroomed_PuppiAK8_jet_pt:PuppiAK8_jet_mass_so	12	50	110	16	200	1000	"W-boson$p_{T}$(RECO)":"W-boson$mass$(RECO)"
+#ungroomed_PuppiAK8_jet_pt:ungroomed_PuppiAK8_jet_eta	12	-2.5	2.5	16	200	1000	"W-boson$p_{T}$(RECO)":"W-boson$#eta$(RECO)"
+#ungroomed_PuppiAK8_jet_vbf_maxpt_j1_ptpt 	20	200	1000	20	30	700	"Leading$VBF$Jet$p_{T}$$(RECO)":"Hadronic$W-boson$$p_{T}$$(RECO)"
+#AK4_1_pt_gen:hadW_pt_gen 	20	200	1000	20	30	700	"Leading$VBF$Jet$p_{T}$$(GEN)":"Hadronic$W-boson$$p_{T}$$(GEN)"
+#vbf_maxpt_j1_eta:vbf_maxpt_j1_pt 	20	-5	5	20	30	700	"Leading$VBF$Jet$p_{T}$$(RECO)":"Leading$VBF$Jet$#eta$$(RECO)"
+#vbf_maxpt_j2_eta:vbf_maxpt_j2_pt 	20	-4.5	4.5	20	30	200	"Sub-Leading$VBF$Jet$p_{T}$$(RECO)":"Sub-Leading$VBF$Jet$#eta$$(RECO)"
+#   GEN RECO 
+l_pt:lep_pt_gen				30	30	500	30	30	500	"Lepton$p_{T}$(RECO)":"Lepton$p_{T}$(GEN)"
+l_eta:lep_eta_gen			30	-2.5	2.5	30	-2.5	2.5	"Lepton$#eta$(RECO)":"Lepton$#eta$(GEN)"
+ungroomed_PuppiAK8_jet_pt:hadW_pt_gen	30	200	800	30	200	800	"Hadronic$W$p_{T}$(RECO)$":"Hadronic$W$p_{T}$(GEN)$"
+ungroomed_PuppiAK8_jet_eta:hadW_eta_gen 30	-3	3	30	-3	3	"Hadronic$W$#eta$(RECO)$":"Hadronic$W$#eta$(GEN)$"
+vbf_maxpt_j1_pt:AK4_1_pt_gen		30	30	1000	30	30	700	"Leading$VBF$Jet$p_{T}$$(RECO)":"Leading$VBF$Jet$p_{T}$$(GEN)"
+vbf_maxpt_j2_pt:AK4_2_pt_gen		30	30	400	30	30	300	"Sub-Leading$VBF$Jet$p_{T}$$(RECO)":"Sub-Leading$VBF$Jet$p_{T}$$(GEN)"
+vbf_maxpt_j1_eta:AK4_1_eta_gen		30	-5	5	30	-5	5	"Leading$VBF$Jet$#eta$$(RECO)":"Leading$VBF$Jet$#eta$$(GEN)"
+vbf_maxpt_j2_eta:AK4_2_eta_gen		30	-5	5	30	-5	5	"Sub-Leading$VBF$Jet$#eta$$(RECO)":"Sub-Leading$VBF$Jet$#eta$$(GEN)"
