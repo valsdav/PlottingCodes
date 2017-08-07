@@ -5,8 +5,13 @@
 	git clone git@github.com:osWW-VBS/ControlPlots.git
 	cd ControlPlots
 
-* Prepare "InData" and "OutDir" directories; e.g., "ln -s . OutDir" to go to current dir
-* Prepare "cuttable.txt" of cut names and cut string
+* Prepare "InData" and "OutDir" directories; e.g., 
 	
+		ln -s <Path_of_InputData> InData_v2
+		mkdir OutDir
+
+* Add all signal, background and data samples in file **DibosonBoostedMuSamples13TeV.txt** (for electrons), **DibosonBoostedElSamples13TeV.txt** (for muons)
+
+* Run the macro **RunMacro.C** to get the control plots
 
 		root -l -b -q RunMacro.C

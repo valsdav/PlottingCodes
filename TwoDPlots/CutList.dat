@@ -1,3 +1,8 @@
 # NOTE: If you put # as first character in line then that line will be commented.
 # Cut on VBF Jets
 # Cut on Dijet 
+(type==0||type==1)
+l_pt2>0
+#pfMETpuppi>30
+#pfMET>30
+#v_pt>200.

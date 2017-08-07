@@ -11,10 +11,10 @@ ROOT.gStyle.SetOptStat('')  # Don't show the stat box
 
 os.system('mkdir -p plots/')
 
-path="/afs/cern.ch/user/r/rasharma/work/aQGC_Studies/SecondStep_WWTrees/CMSSW_8_0_11/src/BaconAnalyzer/WWAnalysisRun2/"
+path="/afs/cern.ch/user/r/rasharma/work/public/aQGC_Ntuples/July24/output_EleMu_V2/"
 
-RootFiles=["OutPutRootFile_el_EleLepOnly_LLLTTT.root"]
-#RootFiles=["OutPutRootFile_el.root"]
+#RootFiles=["WWTree_WplusToLNuWminusTo2JJJ_EWK_LO_SM_MJJ100PTJ10_TuneCUETP8M1_13TeV-madgraph-pythia8_EleMu.root"]
+RootFiles=["WWTree_ZTo2LZTo2JJJ_EWK_LO_SM_MJJ100PTJ10_TuneCUETP8M1_13TeV-madgraph-pythia8_EleMu.root"]
 #RootFiles=["OutPutRootFile_el.root","OutPutRootFile_mu.root"]
 
 cutlist = open("CutList.dat", "r")

@@ -291,7 +291,8 @@ void myControlPlots(const char *cuttablefilename,
 	continue;
       }
 
-    TCut the_cut(TString("totalEventWeight*(")+unwtcutstring+TString(")"));
+    //TCut the_cut(TString("totalEventWeight*(")+unwtcutstring+TString(")"));
+    TCut the_cut(unwtcutstring);
     //TCut the_cutE(TString("effwt*puwt*puwt*(")+unwtcutstring+TString(")"));
 
     TCut nullcut("");
@@ -366,13 +367,14 @@ void myControlPlots(const char *cuttablefilename,
     // Set up the legend
 
     //float  legX0=0.65, legX1=0.99, legY0=0.4, legY1=0.88;
-    float  legX0=0.65, legX1=0.95, legY0=0.6, legY1=0.88;
+    float  legX0=0.17, legX1=0.95, legY0=0.7, legY1=0.88;
     // float  legX0=0.35, legX1=0.85, legY0=0.4, legY1=0.88;
     // float  legX0=0.18, legX1=0.52, legY0=0.4, legY1=0.88;
     TLegend * Leg = new TLegend( legX0, legY0, legX1, legY1);
     Leg->SetFillColor(0);
     Leg->SetFillStyle(0);
     Leg->SetTextSize(0.04);
+    Leg->SetNColumns(3);
 
     if (th1data)
       if (TString(cuttablefilename).Contains("Mu"))
