@@ -1,13 +1,11 @@
 #include "TStyle.h"
 
-TStyle *tdrStyle;
-
 // tdrGrid: Turns the grid lines on (true) or off (false)
 
-void tdrGrid(bool gridOn) {
-  tdrStyle->SetPadGridX(gridOn);
-  tdrStyle->SetPadGridY(gridOn);
-}
+//void tdrGrid(bool gridOn) {
+//  tdrStyle->SetPadGridX(gridOn);
+//  tdrStyle->SetPadGridY(gridOn);
+//}
 
 // fixOverlay: Redraws the axis
 
@@ -16,7 +14,7 @@ void fixOverlay() {
 }
 
 void setTDRStyle() {
-  tdrStyle = new TStyle("tdrStyle","Style for P-TDR");
+  TStyle *tdrStyle = new TStyle("tdrStyle","Style for P-TDR");
 
 // For the canvas:
   tdrStyle->SetCanvasBorderMode(0);
@@ -44,7 +42,7 @@ void setTDRStyle() {
   tdrStyle->SetFrameLineColor(1);
   tdrStyle->SetFrameLineStyle(1);
   tdrStyle->SetFrameLineWidth(1);
-
+  
 // For the histo:
   // tdrStyle->SetHistFillColor(1);
   // tdrStyle->SetHistFillStyle(0);
@@ -59,7 +57,7 @@ void setTDRStyle() {
   //tdrStyle->SetErrorX(0.);
   
   tdrStyle->SetMarkerStyle(20);
-
+  
 //For the fit/function:
   tdrStyle->SetOptFit(1);
   tdrStyle->SetFitFormat("5.4g");
