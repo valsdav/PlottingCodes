@@ -36,6 +36,7 @@ typedef struct {
   double xsecpblumi;
   double otherscale;
   int    nMCevents;
+  int	 MCnegEvent;
   int    colorcode;
   int    stackit;
 }
@@ -45,6 +46,7 @@ SampleInfo_t;
 #include "controlplotvars_common.h"
 #include "controlplotvars_vbf.h"
 #include "controlplotvars_mva.h"
+#include "controlplotvars_Nminus1plot.h"
 
 
 
@@ -151,6 +153,7 @@ public:
     assert(histo);
     histo->Sumw2();
     cout << tree_->Draw(pv.plotvar+TString(">>")+hname, cut, "goff") << " entries, ";
+    histo->SetBinContent(pv.NBINS,histo->GetBinContent(pv.NBINS)+histo->GetBinContent(pv.NBINS+1));
     cout << histo->IntegralAndError(0,histo->GetNbinsX()+1,tmp) << " " << tmp << " " << "weighted entries";
 
 #if 0
@@ -165,7 +168,8 @@ public:
     }
 #endif
     if (info_.nMCevents) {
-      histo->Scale(info_.xsecpblumi*info_.otherscale);
+      //cout<<"\n===> Evetns = "<<info_.xsecpblumi<<"\t"<<info_.nMCevents<<"\t"<<info_.MCnegEvent<<"\t"<<info_.colorcode<<endl;
+      histo->Scale((info_.xsecpblumi*info_.otherscale)/(info_.nMCevents - info_.MCnegEvent));
       cout << ", " <<histo->IntegralAndError(1,histo->GetNbinsX(),tmp) << " " << tmp*info_.xsecpblumi*info_.otherscale << " " << " scaled events in window";
     }
     cout << endl;
@@ -207,7 +211,7 @@ void loadSamples(const char *filename,vector<Sample *>& samples)
     //for (size_t j=0; j<fields.size(); j++)
     //cout << j << ": \"" << fields[j] << "\"" << endl;
 
-    assert (fields.size()==7);
+    assert (fields.size()==8);
 
     SampleInfo_t s;
     s.index        = i;
@@ -216,8 +220,9 @@ void loadSamples(const char *filename,vector<Sample *>& samples)
     s.xsecpblumi   = str2dbl(fields[2]);
     s.otherscale   = str2dbl(fields[3]);
     s.nMCevents    = str2int(fields[4]);
-    s.colorcode    = str2int(fields[5]);
-    s.stackit      = str2int(fields[6]);
+    s.MCnegEvent   = str2int(fields[5]);
+    s.colorcode    = str2int(fields[6]);
+    s.stackit      = str2int(fields[7]);
     
     cout << "Loading sample " << s.samplename << " -> " << s.treefilename << endl;
 
@@ -294,8 +299,8 @@ void myControlPlots(const char *cuttablefilename,
 	continue;
       }
 
-    //TCut the_cut(TString("(1.0/(nEvents-nNegEvents))*totalEventWeight*(")+unwtcutstring+TString(")"));
-    TCut the_cut(TString("(1.0/(nEvents-nNegEvents))*genWeight*(")+unwtcutstring+TString(")"));
+    TCut the_cut(TString("genWeight*trig_eff_Weight*id_eff_Weight*pu_Weight*(")+unwtcutstring+TString(")"));
+    //TCut the_cut(TString("(1.0/(nEvents-nNegEvents))*genWeight*trig_eff_Weight*id_eff_Weight*pu_Weight*(")+unwtcutstring+TString(")"));
     //TCut the_cut(unwtcutstring);
     //TCut the_cutE(TString("effwt*puwt*puwt*(")+unwtcutstring+TString(")"));
 
@@ -492,7 +497,7 @@ void myControlPlots(const char *cuttablefilename,
 	 rit != v_legentries.rend();
 	 rit++)
       {
-	if(rit->first=="aQGC" || rit->first=="WV(EWK)")
+	if(rit->first=="aQGC" || rit->first=="WV(EWK)X100")
 	  Leg->AddEntry(rit->second, rit->first, "L" ); // "F");
 	else
 	  Leg->AddEntry(rit->second, rit->first, "F" ); // "F");
@@ -594,8 +599,8 @@ void myControlPlots(const char *cuttablefilename,
     }
 
 //    th1totempty->SetMaximum(2.5*maxval);
-    th1totempty->SetMaximum(2.6*maxval);
-    if(pv.slog==1) th1totempty->SetMaximum(2.6*maxval);
+    th1totempty->SetMaximum(2.8*maxval);
+    if(pv.slog==1) th1totempty->SetMaximum(2.8*maxval);
 
     // Draw it all
 
@@ -630,7 +635,7 @@ void myControlPlots(const char *cuttablefilename,
 	if (mit != m_histos.end()) {
 	  TH1 *h = mit->second;
 	  //if (h) h->Draw("histsame");	// To get line for data...
-	  if (h && s->name()=="WV(EWK)") 
+	  if (h && s->name()=="WV(EWK)X100") 
 	    {
 	      h->SetFillStyle(0.);
 	      //aqgc->SetLineStyle(11);
@@ -740,6 +745,7 @@ void myControlPlots(const char *cuttablefilename,
     TString outfile = TString("OutDir/")+TString(gSystem->BaseName(cuttablefilename)).ReplaceAll(".txt","")+TString("_")+pv.outfile;
 
     c1->Print(outfile+".pdf");
+    c1->Print(outfile+".png");
 #if 0
     c1->Print(outfile+".C");
     //gPad->WaitPrimitive();
@@ -765,6 +771,137 @@ void dibresNobtagElplots()
 //================================================================================
 
 
+void Nminus1_plots_met()
+{
+  myControlPlots("DibosonBoostedElCuts13TeV_WjetControlRegion_tight.txt",
+  		 "DibosonBoostedElSamples13TeV.txt",
+		 met
+		 );
+  myControlPlots("DibosonBoostedMuCuts13TeV_WjetControlRegion_tight.txt",
+  		 "DibosonBoostedMuSamples13TeV.txt",
+		 met
+		 );
+  myControlPlots("DibosonBoostedElCuts13TeV_TTBarControlRegion.txt",
+  		 "DibosonBoostedElSamples13TeV.txt",
+		 met
+		 );
+  myControlPlots("DibosonBoostedMuCuts13TeV_TTBarControlRegion.txt",
+  		 "DibosonBoostedMuSamples13TeV.txt",
+		 met
+		 );
+}
+
+void Nminus1_plots_fat_jet()
+{
+  myControlPlots("DibosonBoostedElCuts13TeV_WjetControlRegion_tight.txt",
+  		 "DibosonBoostedElSamples13TeV.txt",
+		 fat_jet
+		 );
+  myControlPlots("DibosonBoostedMuCuts13TeV_WjetControlRegion_tight.txt",
+  		 "DibosonBoostedMuSamples13TeV.txt",
+		 fat_jet
+		 );
+  myControlPlots("DibosonBoostedElCuts13TeV_TTBarControlRegion.txt",
+  		 "DibosonBoostedElSamples13TeV.txt",
+		 fat_jet
+		 );
+  myControlPlots("DibosonBoostedMuCuts13TeV_TTBarControlRegion.txt",
+  		 "DibosonBoostedMuSamples13TeV.txt",
+		 fat_jet
+		 );
+}
+
+void Nminus1_plots_vbfmjj()
+{
+  myControlPlots("DibosonBoostedElCuts13TeV_WjetControlRegion_tight.txt",
+  		 "DibosonBoostedElSamples13TeV.txt",
+		 vbfmjj
+		 );
+  myControlPlots("DibosonBoostedMuCuts13TeV_WjetControlRegion_tight.txt",
+  		 "DibosonBoostedMuSamples13TeV.txt",
+		 vbfmjj
+		 );
+  myControlPlots("DibosonBoostedElCuts13TeV_TTBarControlRegion.txt",
+  		 "DibosonBoostedElSamples13TeV.txt",
+		 vbfmjj
+		 );
+  myControlPlots("DibosonBoostedMuCuts13TeV_TTBarControlRegion.txt",
+  		 "DibosonBoostedMuSamples13TeV.txt",
+		 vbfmjj
+		 );
+}
+
+void Nminus1_plots_vbfdEta()
+{
+  myControlPlots("DibosonBoostedElCuts13TeV_WjetControlRegion_tight.txt",
+  		 "DibosonBoostedElSamples13TeV.txt",
+		 vbfdEta
+		 );
+  myControlPlots("DibosonBoostedMuCuts13TeV_WjetControlRegion_tight.txt",
+  		 "DibosonBoostedMuSamples13TeV.txt",
+		 vbfdEta
+		 );
+  myControlPlots("DibosonBoostedElCuts13TeV_TTBarControlRegion.txt",
+  		 "DibosonBoostedElSamples13TeV.txt",
+		 vbfdEta
+		 );
+  myControlPlots("DibosonBoostedMuCuts13TeV_TTBarControlRegion.txt",
+  		 "DibosonBoostedMuSamples13TeV.txt",
+		 vbfdEta
+		 );
+}
+
+void Nminus1_plots_nbtag()
+{
+  myControlPlots("DibosonBoostedElCuts13TeV_TTBarControlRegion.txt",
+  		 "DibosonBoostedElSamples13TeV.txt",
+		 nbtag
+		 );
+  myControlPlots("DibosonBoostedMuCuts13TeV_TTBarControlRegion.txt",
+  		 "DibosonBoostedMuSamples13TeV.txt",
+		 nbtag
+		 );
+}
+
+void Wjet_loose()
+{
+  myControlPlots("DibosonBoostedElCuts13TeV_WjetControlRegion_loose.txt",
+  		 "DibosonBoostedElSamples13TeV.txt"
+		 );
+  myControlPlots("DibosonBoostedMuCuts13TeV_WjetControlRegion_loose.txt",
+  		 "DibosonBoostedMuSamples13TeV.txt"
+		 );
+}
+
+void Wjet_tight()
+{
+  myControlPlots("DibosonBoostedElCuts13TeV_WjetControlRegion_tight.txt",
+  		 "DibosonBoostedElSamples13TeV.txt"
+		 );
+  myControlPlots("DibosonBoostedMuCuts13TeV_WjetControlRegion_tight.txt",
+  		 "DibosonBoostedMuSamples13TeV.txt"
+		 );
+}
+
+void TopControl()
+{
+  myControlPlots("DibosonBoostedElCuts13TeV_TTBarControlRegion.txt",
+  		 "DibosonBoostedElSamples13TeV.txt"
+		 );
+  myControlPlots("DibosonBoostedMuCuts13TeV_TTBarControlRegion.txt",
+  		 "DibosonBoostedMuSamples13TeV.txt"
+		 );
+}
+
+void Wjet_tighter()
+{
+  myControlPlots("DibosonBoostedElCuts13TeV_WjetControlRegion_Tighter.txt",
+  		 "DibosonBoostedElSamples13TeV.txt"
+		 );
+  myControlPlots("DibosonBoostedMuCuts13TeV_WjetControlRegion_Tighter.txt",
+  		 "DibosonBoostedMuSamples13TeV.txt"
+		 );
+}
 void dibresabtagElplots()
 {
   myControlPlots("DibosonResolvedElCuts.txt",
