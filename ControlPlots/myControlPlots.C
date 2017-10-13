@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <fstream>
 #include <map>
 #include <string>
 #include <vector>
@@ -44,6 +45,8 @@ SampleInfo_t;
 
 #include "controlplotvars_boosted.h"
 #include "controlplotvars_common.h"
+#include "controlplotvars_CHS.h"
+#include "controlplotvars_Puppi.h"
 #include "controlplotvars_vbf.h"
 #include "controlplotvars_mva.h"
 #include "controlplotvars_Nminus1plot.h"
@@ -154,6 +157,7 @@ public:
     histo->Sumw2();
     cout << tree_->Draw(pv.plotvar+TString(">>")+hname, cut, "goff") << " entries, ";
     histo->SetBinContent(pv.NBINS,histo->GetBinContent(pv.NBINS)+histo->GetBinContent(pv.NBINS+1));
+    //cout << histo->Integral() << " " << tmp << " " << "weighted entries, (";
     cout << histo->IntegralAndError(0,histo->GetNbinsX()+1,tmp) << " " << tmp << " " << "weighted entries";
 
 #if 0
@@ -170,7 +174,7 @@ public:
     if (info_.nMCevents) {
       //cout<<"\n===> Evetns = "<<info_.xsecpblumi<<"\t"<<info_.nMCevents<<"\t"<<info_.MCnegEvent<<"\t"<<info_.colorcode<<endl;
       histo->Scale((info_.xsecpblumi*info_.otherscale)/(info_.nMCevents - info_.MCnegEvent));
-      cout << ", " <<histo->IntegralAndError(1,histo->GetNbinsX(),tmp) << " " << tmp*info_.xsecpblumi*info_.otherscale << " " << " scaled events in window";
+      cout << ", " <<histo->IntegralAndError(1,histo->GetNbinsX(),tmp) << " " <<tmp<< " " << (histo->Integral(1,histo->GetNbinsX()+1)*info_.xsecpblumi*info_.otherscale)/(info_.nMCevents - info_.MCnegEvent) << " " << " scaled events in window";
     }
     cout << endl;
 
@@ -251,6 +255,7 @@ void myControlPlots(const char *cuttablefilename,
 //		    const plotVar_t plotvars[] = boostedplotvars )
 {
   //gROOT->ProcessLine(".L tdrstyle.C");
+  ofstream Logfile;
 
   TH1::SetDefaultSumw2(1);
  
@@ -287,6 +292,17 @@ void myControlPlots(const char *cuttablefilename,
   for (int ivar=0; ; ivar++) {
 
     plotVar_t pv = plotvars[ivar];
+    TString outfile = TString("OutDir/")+TString(gSystem->BaseName(cuttablefilename)).ReplaceAll(".txt","")+TString("_")+pv.outfile;
+    Logfile.open (outfile+".log");
+    TString temp = TString("Yield of Variable : ")+pv.outfile;
+    const std::string spaces(temp.Length(), ' ');
+    const std::string second = "* " + spaces + " *";
+    const std::string first(second.size(), '*');
+    Logfile << first << std::endl;
+    Logfile << second << std::endl;
+    Logfile << "* " << temp << " *" << std::endl;
+    Logfile << second << std::endl;
+    Logfile << first << std::endl;
  
     if ( !pv.plotvar.Length() ) break;
 
@@ -299,8 +315,8 @@ void myControlPlots(const char *cuttablefilename,
 	continue;
       }
 
+    //TCut the_cut(TString("genWeight*trig_eff_Weight*id_eff_Weight*(")+unwtcutstring+TString(")"));
     TCut the_cut(TString("genWeight*trig_eff_Weight*id_eff_Weight*pu_Weight*(")+unwtcutstring+TString(")"));
-    //TCut the_cut(TString("(1.0/(nEvents-nNegEvents))*genWeight*trig_eff_Weight*id_eff_Weight*pu_Weight*(")+unwtcutstring+TString(")"));
     //TCut the_cut(unwtcutstring);
     //TCut the_cutE(TString("effwt*puwt*puwt*(")+unwtcutstring+TString(")"));
 
@@ -332,15 +348,15 @@ void myControlPlots(const char *cuttablefilename,
 	h = s->Draw(pvnosmear, TCut(blinddatacutstring), nullcut); // effwt*puwt==1 for data! -- NO IT DOESN'T NECESSARILY!
       }
       else if (s->name().EqualTo("aQGC")){
-	h = s->Draw(pv, the_cut*"(LHEWeight[680])", the_cut*"(LHEWeight[680])");
+	h = s->Draw(pv, the_cut*"(LHEWeight[515]/LHEWeight[0])", the_cut*"(LHEWeight[515]/LHEWeight[0])");
 	if (s->stackit()) {
-	  totevents += h->Integral(0,h->GetNbinsX()+1);
+	  totevents += h->Integral(1,h->GetNbinsX()+1);
 	} 
       }
       else {
 	h = s->Draw(pv, the_cut, the_cut);
 	if (s->stackit()) {
-	  totevents += h->Integral(0,h->GetNbinsX()+1);
+	  totevents += h->Integral(1,h->GetNbinsX()+1);
 	}
       }
       
@@ -397,12 +413,15 @@ void myControlPlots(const char *cuttablefilename,
 
     double ndata=1., renorm=1.;
     if (th1data) {
-      ndata  = th1data->Integral(0,th1data->GetNbinsX()+1);
+      ndata  = th1data->Integral(1,th1data->GetNbinsX()+1);
       renorm = ndata/totevents;
 
-      cout << "den = " << totevents << endl;
-      cout << "data = " << ndata  <<endl;
-      cout  << "data/den = " << renorm << endl;
+      cout << "Total MC	= " << totevents << endl;
+      cout << "data	= " << ndata  <<endl;
+      cout  << "data/MC	= " << renorm << endl;
+      Logfile << "Total MC	= " << totevents << endl;
+      Logfile << "data	= " << ndata  <<endl;
+      Logfile << "data/MC	= " << renorm << endl;
     }
 
     // Setup the stack and total
@@ -467,11 +486,13 @@ void myControlPlots(const char *cuttablefilename,
       //else
       //	h->Scale(ndata/h->Integral());
 
-      cout << s->name() << " = " << Form("%4g,%7g,%4g",
-					 h->Integral(0,0),
-					 h->Integral(1,h->GetNbinsX()),
-					 h->Integral(h->GetNbinsX()+1,h->GetNbinsX()+1))
-	   << endl;
+//      cout << s->name() << "	= " << Form("%4g,%7g,%4g",
+//					 h->Integral(0,0),
+//					 h->Integral(1,h->GetNbinsX()+1),
+//					 h->Integral(h->GetNbinsX()+1,h->GetNbinsX()+1))
+//	   << endl;
+      cout << s->name() << "	= " << Form("%7g", h->Integral(1,h->GetNbinsX()+1)) << endl;
+      Logfile << s->name() << "	= " << Form("%7g", h->Integral(1,h->GetNbinsX()+1)) << endl;
 
       if(s->stackit()) {
 	// Compose the stack
@@ -599,8 +620,8 @@ void myControlPlots(const char *cuttablefilename,
     }
 
 //    th1totempty->SetMaximum(2.5*maxval);
-    th1totempty->SetMaximum(2.8*maxval);
-    if(pv.slog==1) th1totempty->SetMaximum(2.8*maxval);
+    th1totempty->SetMaximum(2.6*maxval);
+    if(pv.slog==1) th1totempty->SetMaximum(2.6*maxval);
 
     // Draw it all
 
@@ -651,6 +672,7 @@ void myControlPlots(const char *cuttablefilename,
 	      h->SetLineWidth(3.);
 	      h->SetLineColor(kRed+3);
 	      h->Draw("histsame");
+	      //h->Draw("e1same");
 	    }
 	}
       }
@@ -742,10 +764,10 @@ void myControlPlots(const char *cuttablefilename,
       line->Draw();
     }
 
-    TString outfile = TString("OutDir/")+TString(gSystem->BaseName(cuttablefilename)).ReplaceAll(".txt","")+TString("_")+pv.outfile;
 
     c1->Print(outfile+".pdf");
     c1->Print(outfile+".png");
+    Logfile.close();
 #if 0
     c1->Print(outfile+".C");
     //gPad->WaitPrimitive();
@@ -896,11 +918,11 @@ void TopControl()
 void Wjet_tighter()
 {
   myControlPlots("DibosonBoostedElCuts13TeV_WjetControlRegion_Tighter.txt",
-  		 "DibosonBoostedElSamples13TeV.txt"
-		 );
-  myControlPlots("DibosonBoostedMuCuts13TeV_WjetControlRegion_Tighter.txt",
-  		 "DibosonBoostedMuSamples13TeV.txt"
-		 );
+  		 "DibosonBoostedElSamples13TeV.txt",
+		 commonplotvars_chs );
+  //myControlPlots("DibosonBoostedMuCuts13TeV_WjetControlRegion_Tighter.txt",
+  //		 "DibosonBoostedMuSamples13TeV.txt",
+  //		 commonplotvars_chs );
 }
 void dibresabtagElplots()
 {

@@ -1,0 +1,17 @@
+#  Name                     Cut string
+#"type=ele(1),muon(0)
+"Mu"			"(type==0)"
+"1 lepton"		"(l_pt2<0)"
+"Good Muon"		"((l_pt1>30.) && (abs(l_eta1)<2.5))"
+"Good FatJet"		"((ungroomed_AK8jet_pt>200)&&(abs(ungroomed_AK8jet_eta)<2.4)&&(AK8jet_tau2tau1<0.55))"
+"m_{J}<50 && m_{J}>110"	"((AK8jet_mass_so<50) || (AK8jet_mass_so>110))"
+"Loose b-tag AK4<2"	"(nBTagJet_loose==0)"
+"pfMET_Corr>30"		"(pfMET_Corr>50)"
+#"W p_{T}>200"		"(v_pt_type0>200.)"
+"VBFjets"		"(isVBF==1)"
+"VBF jet deta > 2.5"    "(abs(vbf_maxpt_j2_eta-vbf_maxpt_j1_eta)>2.5)"
+#"HF Exclusion"		"(abs(vbf_maxpt_j1_eta)<3.0)"
+#"HF Exclusion"		"(abs(vbf_maxpt_j2_eta)<3.0)"
+"VBF jet pts > 30"	"((vbf_maxpt_j1_pt>30) && (vbf_maxpt_j2_pt>30))"
+"VBF Mjj > 500"         "(vbf_maxpt_jj_m>500)"
+#"Diboson Topology"	"(issignal==1)"

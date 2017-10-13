@@ -11,10 +11,12 @@ ROOT.gStyle.SetOptStat('')  # Don't show the stat box
 
 os.system('mkdir -p plots/')
 
-path="/afs/cern.ch/user/r/rasharma/work/public/aQGC_Ntuples/July24/output_EleMu_V2/"
+#path="/afs/cern.ch/user/r/rasharma/work/public/aQGC_Ntuples/OutPut_Ele_6Sep/"
+path="/afs/cern.ch/user/r/rasharma/work/public/aQGC_Ntuples/OutPut_Ele_2Oct/"
 
 #RootFiles=["WWTree_WplusToLNuWminusTo2JJJ_EWK_LO_SM_MJJ100PTJ10_TuneCUETP8M1_13TeV-madgraph-pythia8_EleMu.root"]
-RootFiles=["WWTree_ZTo2LZTo2JJJ_EWK_LO_SM_MJJ100PTJ10_TuneCUETP8M1_13TeV-madgraph-pythia8_EleMu.root"]
+#RootFiles = [ "Signal_WpWm_LNuJJ_EWK_SM.root" ]
+RootFiles = [ "Signal_WpWm_EWK_LO_SM_MJJ100PTJ10_TuneCUETP8M1_13TeV-madgraph-pythia8_EleMu.root" ]
 #RootFiles=["OutPutRootFile_el.root","OutPutRootFile_mu.root"]
 
 cutlist = open("CutList.dat", "r")
@@ -33,6 +35,7 @@ for columns in ( raw.strip().split() for raw in cutlist ):
 #ROOT.gStyle.SetGridStyle(1)
 #ROOT.gStyle.SetPalette(1)
 
+print "\n\n==================\n\n",cut,"\n\n=====\n\n"
 c=ROOT.TCanvas("c","c",800,600)
 c.SetRightMargin(0.15)      # right margin for canvas
 c.SetGridx()
@@ -86,8 +89,10 @@ for files in RootFiles:
         c.Print("plots/"+filename+"/Scatter_"+filename+"_"+t1+"_vs_"+t2+".png")
         c.Print("plots/"+filename+"/Scatter_"+filename+"_"+t1+"_vs_"+t2+".pdf")
         c.Print("plots/"+filename+"/Scatter_"+filename+"_"+t1+"_vs_"+t2+".C")
+	c.Print("output.pdf(")
         #c.Write()
         c.Clear()
         countv=countv+1
     countf=countf+1
+    c.Print("output.pdf)")
 #outputfile.Write()
