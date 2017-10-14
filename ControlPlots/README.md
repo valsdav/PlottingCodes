@@ -12,6 +12,25 @@
 
 * Add all signal, background and data samples in file **DibosonBoostedMuSamples13TeV.txt** (for electrons), **DibosonBoostedElSamples13TeV.txt** (for muons)
 
-* Run the macro **RunMacro.C** to get the control plots
+## Control Plot Instructions
+ Run the macro **RunMacro.C** to get the control plots
 
-		root -l -b -q RunMacro.C
+	root -l -b -q RunMacro.C
+	RunMacro.C
+	myControlPlots.C
+	DibosonBoostedMuCuts13TeV_WjetControlRegion_Tighter_CHS.txt
+	DibosonBoostedElCuts13TeV_WjetControlRegion_Tighter_CHS.txt
+	DibosonBoostedMuCuts13TeV_TTBarControlRegion.txt
+	DibosonBoostedElCuts13TeV_TTBarControlRegion.txt
+	DibosonBoostedMuSamples13TeV_InData_11Oct_OnlyCHS.txt
+	DibosonBoostedElSamples13TeV_InData_11Oct_OnlyCHS.txt
+
+## Signal Background Comparison
+
+	RunMacro_SigBkgComparison.C
+	myControlPlots_SignalBkg_Comparison.C
+	DibosonBoostedElCuts13TeV_Signal_CHS.txt
+	DibosonBoostedMuCuts13TeV_Signal_CHS.txt
+	controlplotvars_CHS_signal.h
+	DibosonBoostedMuSamples13TeV_InData_11Oct_OnlyCHS.txt
+	DibosonBoostedElSamples13TeV_InData_11Oct_OnlyCHS.txt
