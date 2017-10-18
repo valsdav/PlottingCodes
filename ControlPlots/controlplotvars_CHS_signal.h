@@ -8,6 +8,7 @@ const plotVar_t commonplotvars_chs_signal[] = {
 //    plotvar	MINRange  MAXRange  NBINS  slog xlabel outfile AMINRange  AMAXRange ANBINS drawleg
 //
 //    LEPTONS
+/*
  { "l_pt1+pfMET+ungroomed_AK8jet_pt+vbf_maxpt_j1_pt+vbf_maxpt_j2_pt",	0, 2000, 40, 3, "HT", "ht", 0, 2000, 40, 1},
  { "nPV",		0, 50, 50, 3,	"Number of primary vertices", "nPV", 	0, 50, 50, 1},
  { "l_pt1",		0, 300, 30, 3,		"Lepton p_{T} (GeV)",     "lepton_pt",       0,  300, 30, 1 },
@@ -30,8 +31,9 @@ const plotVar_t commonplotvars_chs_signal[] = {
  { "AK8jet_mass_pr", 	50, 110, 12, 1, "AK8 pruned mass (GeV)",	"AK8_mass_pr", 50, 110, 12, 1},
  { "AK8jet_mass_so", 	50, 110, 12, 1, "AK8 Softdrop mass (GeV)",	"AK8_mass_so", 50, 110, 12, 1},
  { "AK8jet_mass_tr", 	50, 110, 12, 1, "AK8 tr mass (GeV)", 		"AK8_mass_tr", 50, 110, 12, 1},
-  
+ */ 
  { "mass_lvj_type0", 	0, 1600, 64, 1, "WW invariant mass  type0 (GeV)",		"mass_lvj_type0",    0, 1600, 64, 1},
+ /* 
  { "mass_lvj_type2", 	0, 1600, 64, 1, "WW invariant mass type2 (GeV)",		"mass_lvj_type2",    0, 1600, 64, 1},
  { "mass_lvj_run2", 	0, 1600, 64, 1, "WW invariant mass run2 (GeV)",		"mass_lvj_run2",    0, 1600, 64, 1},
 
@@ -85,6 +87,7 @@ const plotVar_t commonplotvars_chs_signal[] = {
  { "phi1_run2", 	-3.5, 3.5, 20, 6, 	"phi1_run2"  ,  "phi1_run2" ,  -3.5, 3.5, 20, 0}, 
  { "phi1_type2", 	-3.5, 3.5, 20, 6,	"phi1_type2"  , "phi1_type2" , -3.5, 3.5, 20, 0}, 
  { "phi1_type0", 	-3.5, 3.5, 20, 6, 	"phi1_type0"  , "phi1_type0" , -3.5, 3.5, 20, 0}, 
+ */
 
  { "", 0.0,0.0,0,0,"","",0.,0.,0,0 }
 };

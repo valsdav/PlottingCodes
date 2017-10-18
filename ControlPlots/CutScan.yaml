@@ -1,0 +1,169 @@
+variables:
+        - name: vbf_maxpt_jj_m
+          tag: mjj
+          iRange: 500.0
+          fRange: 2500.0
+          step: 100.0
+          ltgt: ">"
+
+        - name: l_pt1
+          tag: lepton pt
+          iRange: 30.0
+          fRange: 200.0
+          step: 10.0
+          ltgt: ">"
+
+#variablesSkip:
+        - name: pfMET_Corr
+          tag: pfMET
+          iRange: 0.0
+          fRange: 150.0
+          step: 10.0
+          ltgt: ">"
+
+        - name: v_pt_type0
+          tag: Leptonic W pT
+          iRange: 0.0
+          fRange: 400.0
+          step: 50.0
+          ltgt: ">"
+
+        - name: ungroomed_AK8jet_pt
+          tag: Hadronic W pT
+          iRange: 200.0
+          fRange: 400.0
+          step: 25.0
+          ltgt: ">"
+
+
+        - name: mass_lvj_type0
+          tag: mWW
+          iRange: 0.0
+          fRange: 2000.0
+          step: 200.0
+          ltgt: ">"
+
+        - name: deltaphi_METak8jet
+          tag: deltaPhi(MET, AK8)
+          iRange: 0.5
+          fRange: 2.8
+          step: 0.2
+          ltgt: ">"
+
+        - name: AK8jet_tau2tau1
+          tag: tau2/tau1
+          iRange: 0.1
+          fRange: 0.8
+          step: 0.05
+          ltgt: "<"
+
+        - name: vbf_maxpt_j1_pt
+          tag: Leading jet pT
+          iRange: 30.0
+          fRange: 70.0
+          step: 5.0
+          ltgt: ">"
+
+        - name: vbf_maxpt_j2_pt
+          tag: Sub-Leading jet pT
+          iRange: 30.0
+          fRange: 70.0
+          step: 5.0
+          ltgt: ">"
+
+        - name: PtBalance_type0
+          tag: pT balance
+          iRange: 0.1
+          fRange: 0.8
+          step: 0.05
+          ltgt: "<"
+
+        - name: BosonCentrality_type0
+          tag: Boson Centrality
+          iRange: 0.1
+          fRange: 3.4
+          step: 0.20
+          ltgt: ">"
+
+        - name: vbf_maxpt_jj_Deta
+          tag: deltaEta(jj)
+          iRange: 0.5
+          fRange: 7.0
+          step: 0.2
+          ltgt: ">"
+
+        - name: costheta2_type0
+          tag: cos(theta2)
+          iRange: -0.9
+          fRange: 1
+          step: 0.05
+          ltgt: ">"
+
+        - name: AK8jet_mass_so
+          tag: Hadronic W mass
+          iRange: 10.0
+          fRange: 80.0
+          step: 5.0
+          ltgt: ">"
+
+        - name: AK8jet_mass_so
+          tag: Hadronic W mass
+          iRange: 80.0
+          fRange: 130.0
+          step: 5.0
+          ltgt: "<"
+
+#        - name: 
+#          tag: 
+#          iRange: 
+#          fRange: 
+#          step: 
+#          ltgt: ">"
+#
+#        - name: 
+#          tag: 
+#          iRange: 
+#          fRange: 
+#          step: 
+#          ltgt: ">"
+#
+variables2D:
+        - name: AK8jet_mass_so
+          tag: Hadronic W mass
+          iRange: 40.0
+          fRange: 80.0
+          uRange: 120.0
+          step1: 5.0
+          step2: -5.0
+          ltgt1: ">"
+          ltgt2: "<"
+
+variablesABS:
+        - name: costheta1_type0
+          tag: cos(theta1)
+          iRange: -0.9
+          fRange: 0
+          step: 0.05
+          ltgt: ">"
+
+        - name: l_eta1
+          tag: lepton eta
+          iRange: 1.0
+          fRange: 2.4
+          step: 0.1
+          ltgt: "<"
+
+        - name: ZeppenfeldWL_type0
+          tag: Zeppenfeld (with leptonic W)
+          iRange: 0.1
+          fRange: 3.5
+          step: 0.1
+          ltgt: "<"
+
+        - name: WWRapidity
+          tag: WW rapidity
+          iRange: 0.1
+          fRange: 2.0
+          step: 0.05
+          ltgt: "<"
+

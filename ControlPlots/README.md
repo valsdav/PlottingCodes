@@ -34,3 +34,15 @@
 	controlplotvars_CHS_signal.h
 	DibosonBoostedMuSamples13TeV_InData_11Oct_OnlyCHS.txt
 	DibosonBoostedElSamples13TeV_InData_11Oct_OnlyCHS.txt
+
+## Macros for generating files for Limit Calculation
+
+	ScanCutsForLimit.py	# This script to run for simple cut
+	ScanCutsForLimit_2D.py	# Thsi should be run for window like cuts
+	CutScan.yaml		# Cut scan list
+	myControlPlots.C	# Main code
+	controlplotvars_CHS_signal.h	# Observable 
+	DibosonBoostedElSamples13TeV_InData_11Oct_OnlyCHS_limit.txt	# List of all signal and bkg
+	Template_El_Cuts_Limit.txt	# Template file used by script
+	Templet_RunMacro_limit.C	# Template file used by script
+

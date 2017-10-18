@@ -50,6 +50,7 @@ SampleInfo_t;
 #include "controlplotvars_vbf.h"
 #include "controlplotvars_mva.h"
 #include "controlplotvars_Nminus1plot.h"
+#include "controlplotvars_CHS_signal.h"
 
 
 
@@ -251,7 +252,9 @@ void loadSamples(const char *filename,vector<Sample *>& samples)
 
 void myControlPlots(const char *cuttablefilename,
 		    const char *samplefilename,
-		    const plotVar_t plotvars[] = commonplotvars  )
+		    const plotVar_t plotvars[] = commonplotvars,
+		    const string OutRootFile = "testrk.root"
+		    )
 //		    const plotVar_t plotvars[] = boostedplotvars )
 {
   //gROOT->ProcessLine(".L tdrstyle.C");
@@ -283,7 +286,8 @@ void myControlPlots(const char *cuttablefilename,
   if (sdata->Tree())
     cout << "ndata =" << sdata->Tree()->GetEntries() <<endl;
 
-  TFile f("plotvar_histo.root", "RECREATE");
+  TFile f(OutRootFile.c_str(), "RECREATE");
+  //TFile f("plotvar_histo.root", "RECREATE");
 
   //============================================================
   //  VARIABLE LOOP
@@ -441,11 +445,12 @@ void myControlPlots(const char *cuttablefilename,
     //Leg->SetTextSize(0.04);
     //Leg->SetNColumns(3);
 
-    if (th1data)
+    if (th1data){
       if (TString(cuttablefilename).Contains("Mu"))
 	Leg->AddEntry(th1data,  "Observed",  "LP");
       else
 	Leg->AddEntry(th1data,  "Observed",  "LP");
+    }
 
     vector<double> binErrSQ(pv.NBINS,0.);
 
@@ -518,7 +523,8 @@ void myControlPlots(const char *cuttablefilename,
 	 rit != v_legentries.rend();
 	 rit++)
       {
-	if(rit->first=="aQGC" || rit->first=="WV(EWK)X100")
+	//if(rit->first=="aQGC" || rit->first=="WV(EWK)X100")
+	if(rit->first=="aQGC" || rit->first=="WV(EWK)")
 	  Leg->AddEntry(rit->second, rit->first, "L" ); // "F");
 	else
 	  Leg->AddEntry(rit->second, rit->first, "F" ); // "F");
@@ -656,12 +662,15 @@ void myControlPlots(const char *cuttablefilename,
 	if (mit != m_histos.end()) {
 	  TH1 *h = mit->second;
 	  //if (h) h->Draw("histsame");	// To get line for data...
-	  if (h && s->name()=="WV(EWK)X100") 
+	  //if (h && s->name()=="WV(EWK)X100") 
+	  if (h && s->name()=="WV(EWK)") 
 	    {
 	      h->SetFillStyle(0.);
 	      //aqgc->SetLineStyle(11);
 	      h->SetLineWidth(3.);
 	      h->SetLineColor(kBlue+3);
+	      cout << "Significance (SM EWK) = " << (h->Integral(1,h->GetNbinsX()+1))/sqrt((h->Integral(1,h->GetNbinsX()+1))+totevents) << endl;
+	      Logfile << "Significance (SM EWK) = " << (h->Integral(1,h->GetNbinsX()+1))/sqrt((h->Integral(1,h->GetNbinsX()+1))+totevents) << endl;
 	      h->Draw("histsame");
  
 	    }
@@ -671,6 +680,8 @@ void myControlPlots(const char *cuttablefilename,
 	      //aqgc->SetLineStyle(11);
 	      h->SetLineWidth(3.);
 	      h->SetLineColor(kRed+3);
+	      cout << "Significance (aQGC)   = " << (h->Integral(1,h->GetNbinsX()+1))/sqrt((h->Integral(1,h->GetNbinsX()+1))+totevents) << endl;
+	      Logfile << "Significance (aQGC)   = " << (h->Integral(1,h->GetNbinsX()+1))/sqrt((h->Integral(1,h->GetNbinsX()+1))+totevents) << endl;
 	      h->Draw("histsame");
 	      //h->Draw("e1same");
 	    }
@@ -782,7 +793,7 @@ void myControlPlots(const char *cuttablefilename,
 }                                                                // myControlPlots
 
 //================================================================================
-
+/* 
 void dibresNobtagElplots()
 {
   myControlPlots("DibosonResolvedElCuts.txt",
@@ -990,3 +1001,4 @@ void dibbooMuMVAplots(const char *cuttablefilename = "DibosonBoostedMuCuts13TeV.
 		 samplefilename,
 		 mvaplotvars);
 }
+*/
