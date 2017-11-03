@@ -1,6 +1,3 @@
-// vbf_maxpt_jj_Deta
-// vbf_maxpt_jj_m
-// mass_lvj_type0
 void RunMacro_limit()
 {
     gROOT->ProcessLine(".L myControlPlots.C+");
