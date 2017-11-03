@@ -35,7 +35,16 @@
 	DibosonBoostedMuSamples13TeV_InData_11Oct_OnlyCHS.txt
 	DibosonBoostedElSamples13TeV_InData_11Oct_OnlyCHS.txt
 
-## Macros for generating files for Limit Calculation
+## Cut Optimization
+
+To optimize the cut using limit tool we need single root files with different set of cuts applied. So, below receip provide us the way to do this automatically.
+
+List of main files:
+
+	1. ScanCutsForLimit.py for 1D cuts and ScanCutsForLimit_2D.py for 2D cut. With 2D cut I mean cuts like mW mass window and by 1D, I mean simple cut like lepton pT, MET, etc.
+	2. CutScan.yaml: This file has basic details of cuts over which we have to scan.
+	3. 
+
 
 	ScanCutsForLimit.py	# This script to run for simple cut
 	ScanCutsForLimit_2D.py	# Thsi should be run for window like cuts

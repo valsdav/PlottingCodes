@@ -1,16 +1,23 @@
 import os
+import time
+import datetime
 import subprocess
 import yaml
 import numpy as np
 
 f = "CutScan.yaml"
 
+
+OutPutDir = "OutPutRootFiles_"+ datetime.datetime.now().strftime('%Y-%m-%d_%Hh%M')
+os.system("mkdir "+OutPutDir)
+
+SignificanceOutput = open("Significance_"+ datetime.datetime.now().strftime('%Y-%m-%d_%Hh%M') +".log","w")
+
 with open(f, 'r') as f_in:
 	dataMap = yaml.load(f_in)
 
 var = dataMap['variables2D']
 
-SignificanceOutput = open("Significance.log","w")
 
 for i in range(0,len(var)):
 	# Printing the variable name
@@ -23,7 +30,7 @@ for i in range(0,len(var)):
 
 	countCut = 0
 	for cut1 in np.arange(var[i]['iRange'], var[i]['fRange'], var[i]['step1']):
-	   for cut2 in np.arange(var[i]['uRange'], var[i]['fRange'], var[i]['step2']):
+	   for cut2 in np.arange(var[i]['fRange'], var[i]['uRange'], var[i]['step2']):
 		countCut += 1
 		CutString = '"'+str(var[i]['tag'])+'" \t\t "( ( ' + str(var[i]['name'])+str(var[i]['ltgt1'])+str(cut1)+' ) && ( ' + str(var[i]['name'])+str(var[i]['ltgt2'])+str(cut2)+' ))"'
 		print CutString,"\n"
@@ -65,6 +72,8 @@ for i in range(0,len(var)):
 		#output = subprocess.check_output("root -l -b -q RunMacro_limit.C", shell=True)
 		print "================================================\n\n\n"
 		print "Moving output root file to limitExtraction directory...\n"
-		os.system('mv '+OutRootFileName+'  /afs/cern.ch/user/r/rasharma/work/aQGC_Studies/LimitExtraction/CMSSW_8_1_0/src/HiggsAnalysis/CombinedLimit/data/tutorials/shapes/'+OutRootFileName_add+OutRootFileName)
+		#os.system('mv '+OutRootFileName+'  /afs/cern.ch/user/r/rasharma/work/aQGC_Studies/LimitExtraction/CMSSW_8_1_0/src/HiggsAnalysis/CombinedLimit/data/tutorials/shapes/'+OutRootFileName_add+OutRootFileName)
+		os.system('mv '+ OutRootFileName + ' ' + OutPutDir)
 	SignificanceOutput.write("\n\n")
 SignificanceOutput.close()		
+os.system('mv *.log  '+OutPutDir)

@@ -13,7 +13,6 @@ variables:
           step: 10.0
           ltgt: ">"
 
-#variablesSkip:
         - name: pfMET_Corr
           tag: pfMET
           iRange: 0.0
@@ -113,57 +112,120 @@ variables:
           step: 5.0
           ltgt: "<"
 
-#        - name: 
-#          tag: 
-#          iRange: 
-#          fRange: 
-#          step: 
-#          ltgt: ">"
-#
-#        - name: 
-#          tag: 
-#          iRange: 
-#          fRange: 
-#          step: 
-#          ltgt: ">"
-#
-variables2D:
-        - name: AK8jet_mass_so
-          tag: Hadronic W mass
-          iRange: 40.0
-          fRange: 80.0
-          uRange: 120.0
-          step1: 5.0
-          step2: -5.0
-          ltgt1: ">"
-          ltgt2: "<"
+        - name: l_pt1+pfMET+ungroomed_AK8jet_pt+vbf_maxpt_j1_pt+vbf_maxpt_j2_pt 
+          tag: HT
+          iRange: 300  
+          fRange: 1800
+          step: 100
+          ltgt: ">"
 
-variablesABS:
-        - name: costheta1_type0
+        - name: fabs(l_eta1)
+          tag: Lepton Eta
+          iRange: 1.0
+          fRange: 2.4
+          step: 0.2
+          ltgt: "<"
+
+        - name: l_pt1 
+          tag: Lepton pT
+          iRange: 30
+          fRange: 200
+          step: 20
+          ltgt: ">"
+
+        - name: WWRapidity
+          tag: WW Rapidity
+          iRange: 1.0
+          fRange: 2.5
+          step: 0.2
+          ltgt: "<"
+
+        - name: RpT_type0
+          tag: R-pT
+          iRange: 0
+          fRange: 40
+          step: 4
+          ltgt: ">"
+
+        - name: njets
+          tag: Number of VBF jets
+          iRange: 1
+          fRange: 5
+          step: 1
+          ltgt: "<"
+
+        - name: v_mt_type0
+          tag: Transverse mass of Leptonic W
+          iRange: 30
+          fRange: 180
+          step: 20
+          ltgt: ">"
+
+        - name: vbf_maxpt_j1_eta
+          tag: Leading VBF eta
+          iRange: 0.2
+          fRange: 3.0
+          step: 0.2
+          ltgt: ">"
+
+        - name: vbf_maxpt_j2_eta
+          tag: Sub-Leading VBF eta
+          iRange: 0.2
+          fRange: 3.0
+          step: 0.2
+          ltgt: ">"
+
+        - name: LeptonProjection_type0
+          tag: Lepton projection
+          iRange: 0.1
+          fRange: 1.5
+          step: 0.1
+          ltgt: "<"
+
+        - name: fabs(costheta1_type0)
           tag: cos(theta1)
           iRange: -0.9
           fRange: 0
           step: 0.05
           ltgt: ">"
 
-        - name: l_eta1
-          tag: lepton eta
-          iRange: 1.0
-          fRange: 2.4
-          step: 0.1
-          ltgt: "<"
+variables2D:
+        - name: AK8jet_mass_so
+          tag: Hadronic W mass
+          iRange: 40.0
+          fRange: 80.0
+          uRange: 125.0
+          step1: 5.0
+          step2: 5.0
+          ltgt1: ">"
+          ltgt2: "<"
+
+        - name: VBSCentrality_type0
+          tag: VBS Centrality
+          iRange: 0.0
+          fRange: 1.0
+          uRange: 2.4
+          step1: 0.2
+          step2: 0.2
+          ltgt1: ">"
+          ltgt2: "<"
 
         - name: ZeppenfeldWL_type0
-          tag: Zeppenfeld (with leptonic W)
-          iRange: 0.1
-          fRange: 3.5
-          step: 0.1
-          ltgt: "<"
+          tag: Zeppenfeld (Leptonic W)
+          iRange: -4.0
+          fRange: 0.0
+          uRange: 4.0
+          step1: 0.2
+          step2: 0.2
+          ltgt1: ">"
+          ltgt2: "<"
 
-        - name: WWRapidity
-          tag: WW rapidity
-          iRange: 0.1
-          fRange: 2.0
-          step: 0.05
-          ltgt: "<"
-
+        - name: ZeppenfeldWH
+          tag: Zeppenfeld (Hadronic W)
+          iRange: -4
+          fRange: 0
+          uRange: 4
+          step1: 0.2
+          step2: 0.2
+          ltgt1: ">"
+          ltgt2: "<"
