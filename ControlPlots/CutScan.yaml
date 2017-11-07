@@ -208,9 +208,9 @@ variables2D:
 
         - name: ZeppenfeldWH
           tag: Zeppenfeld_(Hadronic_W)
-          iRange: -4
-          fRange: 0
-          uRange: 4
+          iRange: -4.0
+          fRange: 0.0
+          uRange: 4.0
           step1: 0.2
           step2: 0.2
           ltgt1: ">"

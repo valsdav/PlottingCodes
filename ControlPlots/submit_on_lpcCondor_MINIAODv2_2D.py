@@ -21,10 +21,10 @@ nLepton = 1
 # Get date and time for output directory
 ## ADD "test" IN OUTPUT FOLDER IF YOU ARE TESTING SO THAT LATER YOU REMEMBER TO WHICH DIRECTORY YOU HAVE TO REMOVE FROM EOS
 if TestRun:
-	outputFolder = "/store/user/rasharma/CutScanLimit_PlottingToolOutputs/OneDCut_" + str(nLepton) + "Lepton_" +datetime.datetime.now().strftime('%Y_%m_%d_%Hh%M')+"_TEST/";
+	outputFolder = "/store/user/rasharma/CutScanLimit_PlottingToolOutputs/TwoDCuts_" + str(nLepton) + "Lepton_" +datetime.datetime.now().strftime('%Y_%m_%d_%Hh%M')+"_TEST/";
 	OutputLogPath = "OutPut_Logs/Logs_" + datetime.datetime.now().strftime('%Y_%m_%d_%Hh%M') + "_TEST/";
 else:
-	outputFolder = "/store/user/rasharma/CutScanLimit_PlottingToolOutputs/OneDCut_" + str(nLepton) + "Lepton_" +datetime.datetime.now().strftime('%Y_%m_%d_%Hh%M');
+	outputFolder = "/store/user/rasharma/CutScanLimit_PlottingToolOutputs/TwoDCuts_" + str(nLepton) + "Lepton_" +datetime.datetime.now().strftime('%Y_%m_%d_%Hh%M');
 	OutputLogPath = "OutPut_Logs/Logs_" + datetime.datetime.now().strftime('%Y_%m_%d_%Hh%M')+"/";
 
 
@@ -46,18 +46,16 @@ CMSSWRel = os.path.basename(cmsswDirPath[1])
 print "CMSSW release used : ",CMSSWRel
 
 # create tarball of present working CMSSW base directory
+#os.system('rm CMSSW*.tgz')
 os.system('rm CMSSW*.tgz *.root *.log')
 make_tarfile(CMSSWRel+".tgz", cmsswDirPath[1])
 
 # send the created tarball to eos
 os.system('xrdcp -f ' + CMSSWRel+".tgz" + ' root://cmseos.fnal.gov//store/user/rasharma/' + CMSSWRel+".tgz")
-#os.system('xrdcp -f ThingsUpdated.txt root://cmseos.fnal.gov/' + outputFolder)
-#os.system('cp ThingsUpdated.txt ' + OutputLogPath)
 
 inputlist = "submit_on_lpcCondor_MINIAODv2.py, runstep2condor.sh"
 
-command = "python ScanCutsForLimit_Condor.py $1 $2 $3 $4 $5 $6 "+str(nLepton);
-print "COMMAND = ",command
+command = "python ScanCutsForLimit_2D_Condor.py $1 $2 $3 $4 $5 $6 $7 $8 $9 " + str(nLepton);
 
 outScript = open("runstep2condor.sh","w");
 outScript.write('#!/bin/bash');
@@ -70,6 +68,7 @@ outScript.write("\n"+'xrdcp -s root://cmseos.fnal.gov//store/user/rasharma/' + C
 outScript.write("\n"+'tar -xf '+ CMSSWRel +'.tgz' );
 outScript.write("\n"+'rm '+ CMSSWRel +'.tgz' );
 outScript.write("\n"+'cd ' + CMSSWRel + '/src/PlottingCodes/ControlPlots/' );
+outScript.write("\n"+'rm *.root *.log');
 outScript.write("\n"+'scramv1 b ProjectRename');
 outScript.write("\n"+'eval `scram runtime -sh`');
 outScript.write("\n"+command);
@@ -103,14 +102,13 @@ f = "CutScan.yaml"
 with open(f, 'r') as f_in:
         dataMap = yaml.load(f_in)
 
-var = dataMap['variables']
+var = dataMap['variables2D']
 
 
 for i in range(0,len(var)):
         outJDL.write("Output = "+OutputLogPath+var[i]['name']+".stdout\n");
         outJDL.write("Error  = "+OutputLogPath+var[i]['name']+".stdout\n");
-        outJDL.write("Arguments = "+str(var[i]['name']) + " '" + str(var[i]['tag']) + "' " + str(var[i]['iRange']) + " " + str(var[i]['fRange']) + " " + str(var[i]['step']) + " " + str(var[i]['ltgt']) + " " + str(nLepton) + "\n");
-        #outJDL.write("Arguments = "+str(var[i]['name']) + " '" + str(var[i]['tag']) + "' " + str(var[i]['iRange']) + " " + str(var[i]['fRange']) + " " + str(var[i]['step']) + " '" + str(var[i]['ltgt']) + "' " + str(nLepton) + "\n");
+        outJDL.write("Arguments = "+str(var[i]['name']) + " '" + str(var[i]['tag']) + "' " + str(var[i]['iRange']) + " " + str(var[i]['fRange']) + " " + str(var[i]['uRange']) + " " + str(var[i]['step1']) + " " + str(var[i]['step2']) + " " + str(var[i]['ltgt1']) + " " + str(var[i]['ltgt2']) + " " + str(nLepton) + "\n");
         outJDL.write("Queue\n");
 
 outJDL.close();

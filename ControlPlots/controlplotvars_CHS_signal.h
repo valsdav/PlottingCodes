@@ -32,7 +32,7 @@ const plotVar_t commonplotvars_chs_signal[] = {
  { "AK8jet_mass_so", 	50, 110, 12, 1, "AK8 Softdrop mass (GeV)",	"AK8_mass_so", 50, 110, 12, 1},
  { "AK8jet_mass_tr", 	50, 110, 12, 1, "AK8 tr mass (GeV)", 		"AK8_mass_tr", 50, 110, 12, 1},
  */ 
- { "mass_lvj_type0", 	0, 1600, 64, 1, "WW invariant mass  type0 (GeV)",		"mass_lvj_type0",    0, 1600, 64, 1},
+ { "mass_lvj_type0", 	0, 3000, 6, 1, "WW invariant mass  type0 (GeV)",		"mass_lvj_type0",    0, 3000, 6, 1},
  /* 
  { "mass_lvj_type2", 	0, 1600, 64, 1, "WW invariant mass type2 (GeV)",		"mass_lvj_type2",    0, 1600, 64, 1},
  { "mass_lvj_run2", 	0, 1600, 64, 1, "WW invariant mass run2 (GeV)",		"mass_lvj_run2",    0, 1600, 64, 1},
