@@ -43,14 +43,8 @@ typedef struct {
 }
 SampleInfo_t;
 
-#include "controlplotvars_boosted.h"
-#include "controlplotvars_common.h"
-#include "controlplotvars_CHS.h"
-#include "controlplotvars_Puppi.h"
-#include "controlplotvars_vbf.h"
-#include "controlplotvars_mva.h"
-#include "controlplotvars_Nminus1plot.h"
 #include "controlplotvars_CHS_signal.h"
+#include "controlplotvars_common.h"
 
 
 

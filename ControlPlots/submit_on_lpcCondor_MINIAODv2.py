@@ -13,8 +13,7 @@ import commands
 currentDir = os.getcwd();
 CMSSWDir =  currentDir+"/../";
 
-inputFolder = "/store/user/rasharma/tmp/";
-TestRun = 0
+TestRun = 1
 nLepton = 1
 
 
