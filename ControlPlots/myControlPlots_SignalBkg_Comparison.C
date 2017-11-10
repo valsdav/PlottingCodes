@@ -136,6 +136,7 @@ public:
     tree_ = 0;
     //cout << "sample = " << name_ << endl;
     TFile *f = new TFile (sinfo.treefilename, "READ"); if (!f) { cerr << "Couldn't find file " << sinfo.treefilename << endl; return; }
+    //TFile *f =  TFile::Open("root://cmsxrootd.fnal.gov/"+sinfo.treefilename, "READ"); if (!f) { cerr << "Couldn't find file " << sinfo.treefilename << endl; return; }
     tree_ =  (TTree *)f->Get("otree"); if (!tree_) { cerr << "Couldn't find tree otree in file " << sinfo.treefilename << endl; return; }
   }
   ~Sample() { if (tree_) delete tree_; }
@@ -319,8 +320,8 @@ void myControlPlots_SignalBkg_Comparison(const char *cuttablefilename,
 	plotVar_t pvnosmear = pv;
 	h = s->Draw(pvnosmear, TCut(blinddatacutstring), nullcut); // effwt*puwt==1 for data! -- NO IT DOESN'T NECESSARILY!
       }
-      else if (s->name().EqualTo("aQGC")){
-	h = s->Draw(pv, the_cut*"(LHEWeight[515]/LHEWeight[0])", the_cut*"(LHEWeight[515]/LHEWeight[0])");
+      else if (s->name().EqualTo("aQGCX100")){
+	h = s->Draw(pv, the_cut*"(100.0*LHEWeight[992]/LHEWeight[0])", the_cut*"(100.0*LHEWeight[992]/LHEWeight[0])");
 	if (s->stackit()) {
 	  totevents += h->Integral(1,h->GetNbinsX()+1);
 	} 
@@ -453,7 +454,7 @@ void myControlPlots_SignalBkg_Comparison(const char *cuttablefilename,
       
       // Added this if to ignore the maximum range of aQGC distribution
       // Since if we take it then the histogram rescale very bad so that we can't see other histos
-      if (h && s->name()!="aQGC") 
+      if (h && s->name()!="aQGCX100") 
       {
       int maxbin = h->GetMaximumBin();
       maxval = std::max(maxval,h->GetBinContent(maxbin));
@@ -470,12 +471,12 @@ void myControlPlots_SignalBkg_Comparison(const char *cuttablefilename,
 	 rit != v_legentries.rend();
 	 rit++)
       {
-	if(rit->first=="aQGC" || rit->first=="WV(EWK)X100")
+	if(rit->first=="aQGCX100" || rit->first=="WV(EWK)X100")
 	  Leg->AddEntry(rit->second, rit->first, "L" ); // "F");
 	else
 	  Leg->AddEntry(rit->second, rit->first, "F" ); // "F");
       }
-    cout<<" Debug.... 1" << endl;
+    //cout<<" Debug.... 1" << endl;
     TH1D* th1totClone = ( TH1D*) th1tot->Clone("th1totClone");
     th1totClone->SetMarkerStyle(0);
     th1totClone->SetFillStyle(3003);
@@ -485,7 +486,7 @@ void myControlPlots_SignalBkg_Comparison(const char *cuttablefilename,
     for(int ibin=1; ibin<=th1totClone->GetNbinsX(); ++ibin) {
       th1totClone->SetBinError(ibin, sqrt(binErrSQ[ibin-1]));
     }
-    cout<<" Debug.... 2" << endl;
+    //cout<<" Debug.... 2" << endl;
 
     //============================================================
     // SETUP THE CANVAS
@@ -525,11 +526,11 @@ void myControlPlots_SignalBkg_Comparison(const char *cuttablefilename,
       //c1->cd();
       d2 = (TPad*)c1->GetPad(2);
       d2->SetPad(0.01,0.00,0.95,0.02);
-    cout<<" Debug.... 3" << endl;
+    //cout<<" Debug.... 3" << endl;
       d1->cd();
       gPad->SetBottomMargin(0.14);
 
-    cout<<" Debug.... 4" << endl;
+    //cout<<" Debug.... 4" << endl;
     gPad->SetTopMargin(0.1);
     gPad->SetRightMargin(0.05);
     gPad->SetLeftMargin(0.14);
@@ -614,13 +615,13 @@ void myControlPlots_SignalBkg_Comparison(const char *cuttablefilename,
 	      h->Draw("histsame");
  
 	    }
-	  if (h && s->name()=="aQGC") 
+	  if (h && s->name()=="aQGCX100") 
 	    {
 	      h->SetFillStyle(0.);
 	      //aqgc->SetLineStyle(11);
 	      h->SetLineWidth(3.);
 	      h->SetLineColor(kRed+3);
-      	      cout << "Significance (aQGC)	= " << (h->Integral(1,h->GetNbinsX()+1)/100.)/sqrt((h->Integral(1,h->GetNbinsX()+1)/100.)+totevents) << endl;
+      	      cout << "Significance (aQGC)	= " << (h->Integral(1,h->GetNbinsX()+1))/sqrt((h->Integral(1,h->GetNbinsX()+1))+totevents) << endl;
       	      Logfile << "Significance (aQGC)	= " << (h->Integral(1,h->GetNbinsX()+1))/sqrt((h->Integral(1,h->GetNbinsX()+1))+totevents) << endl;
 	      h->Scale(th1tot->Integral(1,th1tot->GetNbinsX()+1)/h->Integral(1,h->GetNbinsX()+1));
 	      h->Draw("histsame");
@@ -630,13 +631,13 @@ void myControlPlots_SignalBkg_Comparison(const char *cuttablefilename,
       }
       oldsamplename=s->name();
     }
-    cout<<" Debug.... 1" << endl;
+    //cout<<" Debug.... 1" << endl;
 
     //cmspre(intLUMIinvpb/1000.0);   
     CMS_lumi( d1, 4, 10 ); 
-    cout<<" Debug.... 2" << endl;
+    //cout<<" Debug.... 2" << endl;
 //    gPad->RedrawAxis();
-    cout<<" Debug.... 3" << endl;
+    //cout<<" Debug.... 3" << endl;
 
 
 

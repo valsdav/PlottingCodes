@@ -51,8 +51,8 @@ SampleInfo_t;
 #include "controlplotvars_mva.h"
 #include "controlplotvars_Nminus1plot.h"
 #include "controlplotvars_CHS_signal.h"
-
-
+#include "controlplotvars_CHS_signal_2lep.h"
+#include "controlplotvars_UpDn.h"
 
 
 
@@ -351,8 +351,8 @@ void myControlPlots(const char *cuttablefilename,
 	//pvnosmear.plotvar.ReplaceAll("_smeared",""); // no smearing for data!
 	h = s->Draw(pvnosmear, TCut(blinddatacutstring), nullcut); // effwt*puwt==1 for data! -- NO IT DOESN'T NECESSARILY!
       }
-      else if (s->name().EqualTo("aQGC")){
-	h = s->Draw(pv, the_cut*"(LHEWeight[515]/LHEWeight[0])", the_cut*"(LHEWeight[515]/LHEWeight[0])");
+      else if (s->name().EqualTo("aQGCX100")){
+	h = s->Draw(pv, the_cut*"(100.0*LHEWeight[992]/LHEWeight[0])", the_cut*"(100.0*LHEWeight[992]/LHEWeight[0])");
 	if (s->stackit()) {
 	  totevents += h->Integral(1,h->GetNbinsX()+1);
 	} 
@@ -523,8 +523,8 @@ void myControlPlots(const char *cuttablefilename,
 	 rit != v_legentries.rend();
 	 rit++)
       {
-	//if(rit->first=="aQGC" || rit->first=="WV(EWK)X100")
-	if(rit->first=="aQGC" || rit->first=="WV(EWK)")
+	//if(rit->first=="aQGC" || rit->first=="WV(EWK)")
+	if(rit->first=="aQGCX100" || rit->first=="WV(EWK)X100")
 	  Leg->AddEntry(rit->second, rit->first, "L" ); // "F");
 	else
 	  Leg->AddEntry(rit->second, rit->first, "F" ); // "F");
@@ -626,8 +626,8 @@ void myControlPlots(const char *cuttablefilename,
     }
 
 //    th1totempty->SetMaximum(2.5*maxval);
-    th1totempty->SetMaximum(2.6*maxval);
-    if(pv.slog==1) th1totempty->SetMaximum(2.6*maxval);
+    th1totempty->SetMaximum(1.6*maxval);
+    if(pv.slog==1) th1totempty->SetMaximum(1.6*maxval);
 
     // Draw it all
 
@@ -662,26 +662,26 @@ void myControlPlots(const char *cuttablefilename,
 	if (mit != m_histos.end()) {
 	  TH1 *h = mit->second;
 	  //if (h) h->Draw("histsame");	// To get line for data...
-	  //if (h && s->name()=="WV(EWK)X100") 
-	  if (h && s->name()=="WV(EWK)") 
+	  //if (h && s->name()=="WV(EWK)") 
+	  if (h && s->name()=="WV(EWK)X100") 
 	    {
 	      h->SetFillStyle(0.);
 	      //aqgc->SetLineStyle(11);
 	      h->SetLineWidth(3.);
 	      h->SetLineColor(kBlue+3);
-	      cout << "Significance (SM EWK) = " << (h->Integral(1,h->GetNbinsX()+1))/sqrt((h->Integral(1,h->GetNbinsX()+1))+totevents) << endl;
-	      Logfile << "Significance (SM EWK) = " << (h->Integral(1,h->GetNbinsX()+1))/sqrt((h->Integral(1,h->GetNbinsX()+1))+totevents) << endl;
+	      cout << "Significance (SM EWK) = " << (h->Integral(1,h->GetNbinsX()+1)/100.0)/sqrt((h->Integral(1,h->GetNbinsX()+1)/100.0)+totevents) << endl;
+	      Logfile << "Significance (SM EWK) = " << (h->Integral(1,h->GetNbinsX()+1)/100.0)/sqrt((h->Integral(1,h->GetNbinsX()+1)/100.0)+totevents) << endl;
 	      h->Draw("histsame");
  
 	    }
-	  if (h && s->name()=="aQGC") 
+	  if (h && s->name()=="aQGCX100") 
 	    {
 	      h->SetFillStyle(0.);
 	      //aqgc->SetLineStyle(11);
 	      h->SetLineWidth(3.);
 	      h->SetLineColor(kRed+3);
-	      cout << "Significance (aQGC)   = " << (h->Integral(1,h->GetNbinsX()+1))/sqrt((h->Integral(1,h->GetNbinsX()+1))+totevents) << endl;
-	      Logfile << "Significance (aQGC)   = " << (h->Integral(1,h->GetNbinsX()+1))/sqrt((h->Integral(1,h->GetNbinsX()+1))+totevents) << endl;
+	      cout << "Significance (aQGC)   = " << (h->Integral(1,h->GetNbinsX()+1)/100.0)/sqrt((h->Integral(1,h->GetNbinsX()+1)/100.0)+totevents) << endl;
+	      Logfile << "Significance (aQGC)   = " << (h->Integral(1,h->GetNbinsX()+1)/100.0)/sqrt((h->Integral(1,h->GetNbinsX()+1)/100.0)+totevents) << endl;
 	      h->Draw("histsame");
 	      //h->Draw("e1same");
 	    }
