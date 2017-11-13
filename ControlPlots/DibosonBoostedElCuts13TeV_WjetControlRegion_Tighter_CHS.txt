@@ -13,7 +13,7 @@
 ##"HF Exclusion"		"(abs(vbf_maxpt_j1_eta)<3.0)"
 ##"HF Exclusion"		"(abs(vbf_maxpt_j2_eta)<3.0)"
 "VBF jet pts > 30"	"((vbf_maxpt_j1_pt>30) && (vbf_maxpt_j2_pt>30))"
-"VBF Mjj > 500"         "(vbf_maxpt_jj_m>500)"
+#"VBF Mjj > 500"         "(vbf_maxpt_jj_m>500)"
 ##"Diboson Topology"	"(issignal==1)"
 "BosonCentrality_type0>0.9"	"(BosonCentrality_type0>0.9)"
 "PtBalance_type0<0.3"		"(PtBalance_type0<0.3)"

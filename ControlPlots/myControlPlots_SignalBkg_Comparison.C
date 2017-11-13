@@ -223,17 +223,16 @@ void loadSamples(const char *filename,vector<Sample *>& samples)
 
     if (!samples.size()) {
       if (s.samplename.EqualTo("data")) {
-	intLUMIinvpb = s.xsecpblumi;
-	s.xsecpblumi = 1;
-	cout << "intLUMI = " << intLUMIinvpb << " pb^-1" << endl;
+        intLUMIinvpb = s.xsecpblumi;
+        s.xsecpblumi = 1;
+        cout << "intLUMI = " << intLUMIinvpb << " pb^-1" << endl;
       } else {
-	cerr << "First sample in the table must be 'data'" << endl;
-	exit(-1);
+        cerr << "First sample in the table must be 'data'" << endl;
+        exit(-1);
       }
     } else {
       s.otherscale *= intLUMIinvpb;
     }
-
     samples.push_back(new Sample(s) );
   }
 }                                                         // loadSamples
@@ -317,63 +316,63 @@ void myControlPlots_SignalBkg_Comparison(const char *cuttablefilename,
       TH1 *h;
 
       if (s->name().EqualTo("data")) {
-	plotVar_t pvnosmear = pv;
-	h = s->Draw(pvnosmear, TCut(blinddatacutstring), nullcut); // effwt*puwt==1 for data! -- NO IT DOESN'T NECESSARILY!
+        plotVar_t pvnosmear = pv;
+        h = s->Draw(pvnosmear, TCut(blinddatacutstring), nullcut); // effwt*puwt==1 for data! -- NO IT DOESN'T NECESSARILY!
       }
       else if (s->name().EqualTo("aQGCX100")){
-	h = s->Draw(pv, the_cut*"(100.0*LHEWeight[992]/LHEWeight[0])", the_cut*"(100.0*LHEWeight[992]/LHEWeight[0])");
-	if (s->stackit()) {
-	  totevents += h->Integral(1,h->GetNbinsX()+1);
-	} 
+        h = s->Draw(pv, the_cut*"(100.0*LHEWeight[992]/LHEWeight[0])", the_cut*"(100.0*LHEWeight[992]/LHEWeight[0])");
+        if (s->stackit()) {
+          totevents += h->Integral(1,h->GetNbinsX()+1);
+        } 
       }
       else {
-	h = s->Draw(pv, the_cut, the_cut);
-	if (s->stackit()) {
-	  totevents += h->Integral(1,h->GetNbinsX()+1);
-	}
+        h = s->Draw(pv, the_cut, the_cut);
+        if (s->stackit()) {
+          totevents += h->Integral(1,h->GetNbinsX()+1);
+        }
       }
       
       if (!h) continue;
 
       map<TString, TH1 *>::iterator mit = m_histos.find(s->name());
       if (mit == m_histos.end()) {
-	h->SetName(s->name());
-	h->SetTitle(s->name());
-	if (s->stackit()) {
-	  if (s->name().EqualTo("W+jets"))
-	    {
-	      h->SetLineColor(TColor::GetColor(222,90,106));
-	      h->SetFillColor(TColor::GetColor(222,90,106));
-	      h->SetLineWidth(0);
-	    }
-	  else if(s->name().EqualTo("top"))
-	    {
-	      h->SetLineColor(TColor::GetColor(155,152,204));
-	      h->SetFillColor(TColor::GetColor(155,152,204));	
-	      h->SetLineWidth(0);
-	    }
-	  else if(s->name().EqualTo("Z+jets"))
-	    {
-	      h->SetLineColor(TColor::GetColor(248,206,104));
-	      h->SetFillColor(TColor::GetColor(248,206,104));	
-	      h->SetLineWidth(0);
-	    }
-	  else if(s->name().EqualTo("Diboson"))
-	    {
-	      h->SetLineColor(TColor::GetColor(250,202,255));
-	      h->SetFillColor(TColor::GetColor(250,202,255));	
-	      h->SetLineWidth(0);
-	    }
-	  else
-	    {
-	      h->SetLineColor(s->colorcode());
-	      h->SetFillColor(s->colorcode());
-	      h->SetLineWidth(0);
-	    }
-	}
-	m_histos[s->name()] = h;
+        h->SetName(s->name());
+        h->SetTitle(s->name());
+        if (s->stackit()) {
+          if (s->name().EqualTo("W+jets"))
+            {
+              h->SetLineColor(TColor::GetColor(222,90,106));
+              h->SetFillColor(TColor::GetColor(222,90,106));
+              h->SetLineWidth(0);
+            }
+          else if(s->name().EqualTo("top"))
+            {
+              h->SetLineColor(TColor::GetColor(155,152,204));
+              h->SetFillColor(TColor::GetColor(155,152,204));	
+              h->SetLineWidth(0);
+            }
+          else if(s->name().EqualTo("Z+jets"))
+            {
+              h->SetLineColor(TColor::GetColor(248,206,104));
+              h->SetFillColor(TColor::GetColor(248,206,104));	
+              h->SetLineWidth(0);
+            }
+          else if(s->name().EqualTo("Diboson"))
+            {
+              h->SetLineColor(TColor::GetColor(250,202,255));
+              h->SetFillColor(TColor::GetColor(250,202,255));	
+              h->SetLineWidth(0);
+            }
+          else
+            {
+              h->SetLineColor(s->colorcode());
+              h->SetFillColor(s->colorcode());
+              h->SetLineWidth(0);
+            }
+        }
+        	m_histos[s->name()] = h;
       } else {
-	mit->second->Add(h);
+        mit->second->Add(h);
       }
     }
 
@@ -383,8 +382,8 @@ void myControlPlots_SignalBkg_Comparison(const char *cuttablefilename,
 
     double ndata=1., renorm=1.;
 
-      cout << "Total MC	= " << totevents << endl;
-      Logfile << "Total MC	= " << totevents << endl;
+    cout << "Total MC	= " << totevents << endl;
+    Logfile << "Total MC	= " << totevents << endl;
 
     // Setup the stack and total
     THStack* hs = new THStack("hs","MC contribution");
@@ -394,7 +393,7 @@ void myControlPlots_SignalBkg_Comparison(const char *cuttablefilename,
 
     //float  legX0=0.65, legX1=0.99, legY0=0.4, legY1=0.88;
     //float  legX0=0.17, legX1=0.95, legY0=0.7, legY1=0.88;
-     float  legX0=0.52, legX1=0.89, legY0=0.54, legY1=0.88;
+    float  legX0=0.52, legX1=0.89, legY0=0.54, legY1=0.88;
     // float  legX0=0.18, legX1=0.52, legY0=0.4, legY1=0.88;
     TLegend * Leg = new TLegend( legX0, legY0, legX1, legY1);
     Leg->SetFillColor(0);
@@ -443,21 +442,21 @@ void myControlPlots_SignalBkg_Comparison(const char *cuttablefilename,
       Logfile << s->name() << "	= " << Form("%7g", h->Integral(1,h->GetNbinsX()+1)) << endl;
 
       if(s->stackit()) {
-	// Compose the stack
-	hs->Add(h);
-	th1tot->Add(h);
-	m_stacked[s->name()] = true;
-	for (int ibin=1; ibin <= pv.NBINS; ibin++)
-	  binErrSQ[ibin-1] += h->GetBinError(ibin)*h->GetBinError(ibin);
+        // Compose the stack
+        hs->Add(h);
+        th1tot->Add(h);
+      	m_stacked[s->name()] = true;
+        for (int ibin=1; ibin <= pv.NBINS; ibin++)
+          binErrSQ[ibin-1] += h->GetBinError(ibin)*h->GetBinError(ibin);
       }
       v_legentries.push_back(*mit);
       
       // Added this if to ignore the maximum range of aQGC distribution
       // Since if we take it then the histogram rescale very bad so that we can't see other histos
-      if (h && s->name()!="aQGCX100") 
+      if (h && s->name()!="aQGCX100" && s->name() != "WV(EWK)X100") 
       {
-      int maxbin = h->GetMaximumBin();
-      maxval = std::max(maxval,h->GetBinContent(maxbin));
+        int maxbin = h->GetMaximumBin();
+        maxval = std::max(maxval,h->GetBinContent(maxbin));
       }
 
       oldsamplename=s->name();
@@ -470,12 +469,12 @@ void myControlPlots_SignalBkg_Comparison(const char *cuttablefilename,
 	   rit = v_legentries.rbegin();
 	 rit != v_legentries.rend();
 	 rit++)
-      {
-	if(rit->first=="aQGCX100" || rit->first=="WV(EWK)X100")
-	  Leg->AddEntry(rit->second, rit->first, "L" ); // "F");
-	else
-	  Leg->AddEntry(rit->second, rit->first, "F" ); // "F");
-      }
+    {
+      if(rit->first=="aQGCX100" || rit->first=="WV(EWK)X100")
+        Leg->AddEntry(rit->second, rit->first, "L" ); // "F");
+      else
+        Leg->AddEntry(rit->second, rit->first, "F" ); // "F");
+    }
     //cout<<" Debug.... 1" << endl;
     TH1D* th1totClone = ( TH1D*) th1tot->Clone("th1totClone");
     th1totClone->SetMarkerStyle(0);
@@ -599,35 +598,35 @@ void myControlPlots_SignalBkg_Comparison(const char *cuttablefilename,
       Sample *s = samples[isamp]; assert (s);
       if (s->name()==oldsamplename) continue;
       if (!s->stackit()) {
-	map<TString, TH1 *>::iterator mit = m_histos.find(s->name());
-	if (mit != m_histos.end()) {
-	  TH1 *h = mit->second;
-	  //if (h) h->Draw("histsame");	// To get line for data...
-	  if (h && s->name()=="WV(EWK)X100") 
-	    {
-	      h->SetFillStyle(0.);
-	      //aqgc->SetLineStyle(11);
-	      h->SetLineWidth(3.);
-	      h->SetLineColor(kBlue+3);
-      	      Logfile << "Significance (SM EWK)	= " << (h->Integral(1,h->GetNbinsX()+1)/100.)/sqrt((h->Integral(1,h->GetNbinsX()+1)/100.)+totevents) << endl;
-      	      cout << "Significance (SM EWK) = " << (h->Integral(1,h->GetNbinsX()+1)/100.)/sqrt((h->Integral(1,h->GetNbinsX()+1)/100.)+totevents) << endl;
-	      h->Scale(th1tot->Integral(1,th1tot->GetNbinsX()+1)/h->Integral(1,h->GetNbinsX()+1));
-	      h->Draw("histsame");
- 
-	    }
-	  if (h && s->name()=="aQGCX100") 
-	    {
-	      h->SetFillStyle(0.);
-	      //aqgc->SetLineStyle(11);
-	      h->SetLineWidth(3.);
-	      h->SetLineColor(kRed+3);
-      	      cout << "Significance (aQGC)	= " << (h->Integral(1,h->GetNbinsX()+1))/sqrt((h->Integral(1,h->GetNbinsX()+1))+totevents) << endl;
-      	      Logfile << "Significance (aQGC)	= " << (h->Integral(1,h->GetNbinsX()+1))/sqrt((h->Integral(1,h->GetNbinsX()+1))+totevents) << endl;
-	      h->Scale(th1tot->Integral(1,th1tot->GetNbinsX()+1)/h->Integral(1,h->GetNbinsX()+1));
-	      h->Draw("histsame");
-	      //h->Draw("e1same");
-	    }
-	}
+	      map<TString, TH1 *>::iterator mit = m_histos.find(s->name());
+        if (mit != m_histos.end()) {
+          TH1 *h = mit->second;
+          //if (h) h->Draw("histsame");	// To get line for data...
+          if (h && s->name()=="WV(EWK)X100") 
+            {
+              h->SetFillStyle(0.);
+              //aqgc->SetLineStyle(11);
+              h->SetLineWidth(3.);
+              h->SetLineColor(kBlue+3);
+                    Logfile << "Significance (SM EWK)	= " << (h->Integral(1,h->GetNbinsX()+1)/100.)/sqrt((h->Integral(1,h->GetNbinsX()+1)/100.)+totevents) << endl;
+                    cout << "Significance (SM EWK) = " << (h->Integral(1,h->GetNbinsX()+1)/100.)/sqrt((h->Integral(1,h->GetNbinsX()+1)/100.)+totevents) << endl;
+              h->Scale(th1tot->Integral(1,th1tot->GetNbinsX()+1)/h->Integral(1,h->GetNbinsX()+1));
+              h->Draw("histsame");
+      
+            }
+          if (h && s->name()=="aQGCX100") 
+            {
+              h->SetFillStyle(0.);
+              //aqgc->SetLineStyle(11);
+              h->SetLineWidth(3.);
+              h->SetLineColor(kRed+3);
+                    cout << "Significance (aQGC)	= " << (h->Integral(1,h->GetNbinsX()+1))/sqrt((h->Integral(1,h->GetNbinsX()+1))+totevents) << endl;
+                    Logfile << "Significance (aQGC)	= " << (h->Integral(1,h->GetNbinsX()+1))/sqrt((h->Integral(1,h->GetNbinsX()+1))+totevents) << endl;
+              h->Scale(th1tot->Integral(1,th1tot->GetNbinsX()+1)/h->Integral(1,h->GetNbinsX()+1));
+              h->Draw("histsame");
+              //h->Draw("e1same");
+            }
+        }
       }
       oldsamplename=s->name();
     }

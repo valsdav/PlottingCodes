@@ -1,0 +1,19 @@
+# name           file_location  xspb/lumipb  otherscale nMCevents       nMCNegEvents    colorcode       stackit
+#data	InData_11Oct_OnlyCHS/SingleElectron.root	35867.06	1	1	0	1	0
+data	InData_11Oct_OnlyCHS/SingleMuon.root	35867.06	1	1	0	1	0
+WV(EWK)X100	InData_11Oct_OnlyCHS/WminusTo2JZTo2LJJ_EWK_LO_SM.root	2.982	1	198896.0	0.0	840	0
+WV(EWK)X100	InData_11Oct_OnlyCHS/WminusToLNuWminusTo2JJJ_EWK_LO_SM.root	3.259	1	199525.0	0.0	840	0
+WV(EWK)X100	InData_11Oct_OnlyCHS/WminusToLNuZTo2JJJ_EWK_LO_SM.root	10.0	1	169938.0	0.0	840	0
+WV(EWK)X100	InData_11Oct_OnlyCHS/WplusTo2JWminusToLNuJJ_EWK_LO_SM.root	91.07	1	1923847.0	0.0	840	0
+WV(EWK)X100	InData_11Oct_OnlyCHS/WplusTo2JZTo2LJJ_EWK_LO_SM.root	5.401	1	188998.0	0.0	840	0
+WV(EWK)X100	InData_11Oct_OnlyCHS/WplusToLNuWminusTo2JJJ_EWK_LO_SM.root	91.14	1	1981107.0	0.0	840	0
+WV(EWK)X100	InData_11Oct_OnlyCHS/WplusToLNuWplusTo2JJJ_EWK_LO_SM.root	8.793	1	198848.0	0.0	840	0
+WV(EWK)X100	InData_11Oct_OnlyCHS/WplusToLNuZTo2JJJ_EWK_LO_SM.root	18.25	1	393171.0	0.0	840	0
+WV(EWK)X100	InData_11Oct_OnlyCHS/ZTo2LZTo2JJJ_EWK_LO_SM.root	1.589	1	99997.0	0.0	840	0
+top	InData_11Oct_OnlyCHS/ST_tW_antitop_5f_NoFullyHadronicDecays.root	19.5741	1	5424956.0	0.0	592	1
+top	InData_11Oct_OnlyCHS/ST_tW_top_5f_NoFullyHadronicDecays.root	19.5741	1	5372830.0	0.0	592	1
+top	InData_11Oct_OnlyCHS/TTToSemilepton.root	364.3	1	91832423.0	0.0	592	1
+top	InData_11Oct_OnlyCHS/TTWJetsToLNu.root	0.2043	1	5280251.0	1282079.0	592	1
+top	InData_11Oct_OnlyCHS/TTWJetsToQQ.root	0.4062	1	833257.0	201483.0	592	1
+top	InData_11Oct_OnlyCHS/TTZToLLNuNu_M-10.root	0.2529	1	7969186.0	2126557.0	592	1
+top	InData_11Oct_OnlyCHS/TTZToQQ.root	0.5297	1	749367.0	199113.0	592	1
